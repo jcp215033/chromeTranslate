@@ -51,3 +51,12 @@ document.addEventListener("mouseup", function (event) {
     translateText(selectedText, srcLang, destLang);
   }
 });
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.action === "translate") {
+    const selectedText = window.getSelection().toString();
+    if (selectedText.length > 0) {
+      translateText(selectedText, request.srcLang, request.destLang);
+    }
+  }
+});
