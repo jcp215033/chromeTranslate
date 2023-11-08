@@ -1,6 +1,3 @@
-// popup.js
-// Assume LANGUAGES object is available here
-
 document.addEventListener(
   "DOMContentLoaded",
   function () {

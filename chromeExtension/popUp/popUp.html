@@ -1,24 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
     <title>Translate Popup</title>
     <style>
-        body {
-            width: 300px;
-            margin: 0;
-            padding: 0;
+        :root {
+            --main-bg-color: #ffffff;
+            --button-bg-color: #5C6BC0;
+            --button-hover-color: #3949AB;
+            --text-color: #5C6BC0;
+            --border-radius: 8px;
         }
 
-        #translate-button {
-            margin: 10px;
+        body {
+            width: 300px;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 15px;
+            background-color: var(--main-bg-color);
+            color: var(--text-color);
+        }
+
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            background-color: var(--main-bg-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            outline: none;
+            font-family: inherit;
+            color: inherit;
+        }
+
+        select:hover,
+        button:hover {
+            border-color: var(--button-bg-color);
+            cursor: pointer;
+        }
+
+        select:focus,
+        button:focus {
+            border-color: var(--button-hover-color);
+        }
+
+        button {
+            background-color: var(--button-bg-color);
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            background-color: var(--button-hover-color);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 1.5em;
+            margin: 0;
         }
     </style>
 </head>
 
 <body>
-    <select id="destLang">
-    </select>
+    <div class="header">
+        <h1>Translator</h1>
+    </div>
+    <div>
+        <label for="destLang">Choose Language:</label>
+        <br>
+        <select id="destLang" class="language-select"></select>
+        </select>
+    </div>
     <script src="popup.js"></script>
 </body>
 

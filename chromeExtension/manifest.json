@@ -4,7 +4,7 @@
     "version": "1.0",
     "permissions": ["activeTab", "storage", "scripting"],
     "host_permissions": [
-        "http://127.0.0.1:5000/*"
+        "http://127.0.0.1:5000/*", "https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css", "https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"
       ],
     "content_scripts": [
         {
@@ -14,5 +14,14 @@
     ],
     "action": {
         "default_popup": "./popUp/popUp.html"
-      }
+      },
+      "content_security_policy": {
+        "extension_pages": "script-src 'self' https://cdn.jsdelivr.net; object-src 'self';"
+      },
+      "web_accessible_resources": [
+        {
+          "resources": ["choices.min.js", "choices.min.css"],
+          "matches": ["<all_urls>"]
+        }
+      ]
 }
