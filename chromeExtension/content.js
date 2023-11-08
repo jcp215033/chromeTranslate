@@ -42,13 +42,43 @@ function replaceSelectedText(translatedText) {
   selection.removeAllRanges();
 }
 
-document.addEventListener("mouseup", function (event) {
-  const selectedText = window.getSelection().toString();
+// document.addEventListener("mouseup", function (event) {
+//   const selectedText = window.getSelection().toString();
+//   if (selectedText.length > 0) {
+//     chrome.storage.local.get(["destLang"], function (result) {
+//       const srcLang = "auto";
+//       const destLang = result.destLang || "en";
+//       translateText(selectedText, srcLang, destLang);
+//     });
+//   }
+// });
+
+document.addEventListener("mouseup", async function (event) {
+  const selectedText = window.getSelection().toString().trim();
   if (selectedText.length > 0) {
-    chrome.storage.local.get(["destLang"], function (result) {
+    chrome.storage.local.get(["destLang"], async function (result) {
       const srcLang = "auto";
       const destLang = result.destLang || "en";
-      translateText(selectedText, srcLang, destLang);
+
+      const detectedLang = await detectLanguage(selectedText);
+
+      if (detectedLang === destLang) {
+        translateText(selectedText, detectedLang, "en");
+      } else {
+        translateText(selectedText, srcLang, destLang);
+      }
     });
   }
 });
+
+async function detectLanguage(text) {
+  const response = await fetch("http://127.0.0.1:5000/detect", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ text: text }),
+  });
+  const data = await response.json();
+  return data.detectedLanguage;
+}

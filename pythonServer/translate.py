@@ -18,5 +18,13 @@ def translate_text():
     return jsonify({'translatedText': translation.text})
 
 
+@app.route('/detect', methods=['POST'])
+def detect_language():
+    data = request.json
+    text_to_detect = data['text']
+    detected_lang = translator.detect(text_to_detect).lang
+    return jsonify(detectedLanguage=detected_lang)
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
