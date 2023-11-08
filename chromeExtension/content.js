@@ -45,18 +45,10 @@ function replaceSelectedText(translatedText) {
 document.addEventListener("mouseup", function (event) {
   const selectedText = window.getSelection().toString();
   if (selectedText.length > 0) {
-    const srcLang = "en";
-    const destLang = "es";
-
-    translateText(selectedText, srcLang, destLang);
-  }
-});
-
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.action === "translate") {
-    const selectedText = window.getSelection().toString();
-    if (selectedText.length > 0) {
-      translateText(selectedText, request.srcLang, request.destLang);
-    }
+    chrome.storage.local.get(["destLang"], function (result) {
+      const srcLang = "auto";
+      const destLang = result.destLang || "en";
+      translateText(selectedText, srcLang, destLang);
+    });
   }
 });
